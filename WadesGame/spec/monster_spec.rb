@@ -1,5 +1,5 @@
 require 'rspec'
-require 'monster'
+require 'model/monster'
 
 describe 'Kobold' do
   let(:monster) { Monster::Kobold.new }
