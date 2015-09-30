@@ -1,4 +1,4 @@
-require 'item'
+require_relative 'item'
 
 module Potion
   class Water < Item::Base

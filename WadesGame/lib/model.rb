@@ -1,8 +1,8 @@
-require 'monster'
-require 'item'
-require 'weapon'
-require 'armor'
-require 'potion'
+require 'model/monster'
+require 'model/item'
+require 'model/weapon'
+require 'model/armor'
+require 'model/potion'
 
 OBJECTS = {
   ':' => Wall,
@@ -63,15 +63,16 @@ class GameField
 EOM
 
   def initialize
-    @board = @initial_board.split(/\n/).each { |ln| ln.each_char{ |ch| whats_here( ch ) } }
+    @board = @initial_board.split(/\n/).each do |ln|
+      ln.each_char { |ch| whats_here(ch) }
+    end
     @start = [3, 0]
   end
 
   def whats_here(location)
-    spot = Maze.make_wall(location)
-    spot = Monster.make_monster(location) if spot.nil?
-    spot = Item.make_item(location) if spot.nil?
-    spot
+    clazz = OBJECTS[location]
+    return nil if clazz.nil?
+    clazz.new
   end
 
   def clear?(x, y)
