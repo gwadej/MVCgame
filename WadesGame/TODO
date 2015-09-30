@@ -1,0 +1,17 @@
+# Game design
+
+Build a simple little dungeon crawl.
+
+1. Start with a hard-coded maze.
+2. Commands for the character
+3. Monsters
+4. Small inventory
+    - Weapons: dagger '!', sword ')', axe '+', bow '}'
+    - Armor: shield ']', leather '[', chain '%', plate '#'
+    - Monsters: kobold, goblin, orc, troll
+    - Potions: water '.', heal light ',', heal major ';', sleep '?'
+    - $: gold
+    - *: Goal large diamond
+5. Hard-coded monster locations (to start)
+6. Hard-coded item locations (to start)
+7. Goal?
