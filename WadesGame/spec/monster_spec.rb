@@ -1,19 +1,14 @@
 require 'rspec'
 require 'model/monster'
 
-describe 'Kobold' do
-  let(:monster) { Monster::Kobold.new }
+shared_examples 'a monster' do
+  let(:monster) { described_class.new }
 
-  it 'name is correct' do
-    expect(monster.name).to eq 'kobold'
-  end
-
-  it 'starts full health' do
-    expect(monster.health).to eq 10
+  it 'is created alive' do
     expect(monster.dead?).to be false
   end
 
-  it 'saves health by armor' do
+  it 's damage is reduced by armor' do
     monster.apply_damage(monster.health)
     expect(monster.health).to be monster.armor
   end
@@ -24,38 +19,58 @@ describe 'Kobold' do
   end
 end
 
-describe 'Goblin' do
+describe Monster::Kobold do
+  let(:monster) { Monster::Kobold.new }
+
+  it 'has correct name' do
+    expect(monster.name).to eq 'kobold'
+  end
+
+  it 'starts with full health' do
+    expect(monster.health).to eq 10
+  end
+
+  it_behaves_like 'a monster'
+end
+
+describe Monster::Goblin do
   let(:monster) { Monster::Goblin.new }
 
-  it 'name is correct' do
+  it 'has correct name' do
     expect(monster.name).to eq 'goblin'
   end
 
-  it 'starts full health' do
+  it 'starts with full health' do
     expect(monster.health).to eq 15
   end
+
+  it_behaves_like 'a monster'
 end
 
-describe 'Orc' do
+describe Monster::Orc do
   let(:monster) { Monster::Orc.new }
 
-  it 'name is correct' do
+  it 'has correct name' do
     expect(monster.name).to eq 'orc'
   end
 
-  it 'starts full health' do
+  it 'starts with full health' do
     expect(monster.health).to eq 25
   end
+
+  it_behaves_like 'a monster'
 end
 
-describe 'Troll' do
+describe Monster::Troll do
   let(:monster) { Monster::Troll.new }
 
-  it 'name is correct' do
+  it 'has correct name' do
     expect(monster.name).to eq 'troll'
   end
 
-  it 'starts full health' do
+  it 'starts with full health' do
     expect(monster.health).to eq 35
   end
+
+  it_behaves_like 'a monster'
 end
