@@ -8,15 +8,25 @@ shared_examples 'a monster' do
     expect(monster.dead?).to be false
   end
 
-  it 's damage is reduced by armor' do
-    monster.apply_damage(monster.health)
-    expect(monster.health).to be monster.armor
+  describe '#health and #dead?' do
+    it 'damage is reduced by its armor' do
+      monster.apply_damage(monster.health)
+      expect(monster.health).to be monster.armor
+      expect(monster.dead?).to be false
+    end
+
+    it 'will die if all health wiped' do
+      monster.apply_damage(monster.health + monster.armor)
+      expect(monster.health).to be 0
+      expect(monster.dead?).to be true
+    end
   end
 
-  it 'will die if all health wiped' do
-    monster.apply_damage(monster.health + monster.armor)
-    expect(monster.dead?).to be true
+  it 'is a monster on contact' do
+    expect(monster.contact).to be :monster
   end
+
+  it { expect(monster).to respond_to(:attack) }
 end
 
 describe Monster::Kobold do
