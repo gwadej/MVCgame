@@ -1,5 +1,32 @@
 require 'monster'
-require 'maze'
+require 'item'
+require 'weapon'
+require 'armor'
+require 'potion'
+
+OBJECTS = {
+  ':' => Wall,
+  '-' => Wall,
+  '|' => Wall,
+  'k' => Monster::Kobold,
+  'g' => Monster::Goblin,
+  'o' => Monster::Orc,
+  't' => Monster::Troll,
+  '$' => Item::Gold,
+  '*' => Item::Diamond,
+  '!' => Weapon::Dagger,
+  ')' => Weapon::Sword,
+  '+' => Weapon::Axe,
+  '/' => Weapon::Staff,
+  ']' => Armor::Leather,
+  '[' => Armor::Ring,
+  '%' => Armor::Chain,
+  '#' => Armor::Plate,
+  '.' => Potion::Water,
+  ',' => Potion::MinorHealing,
+  ';' => Potion::MajorHealing,
+  '?' => Potion::Sleep
+}
 
 class GameField
   attr_reader :start
@@ -49,5 +76,11 @@ EOM
 
   def clear?(x, y)
     whats_here(@board[x][y]).nil?
+  end
+end
+
+class Wall
+  def contact(_player)
+    :wall
   end
 end

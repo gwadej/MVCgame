@@ -1,5 +1,5 @@
 module Monster
-  class Generic
+  class Base
     attr_reader :health, :armor
     def initialize(health, armor)
       @health = health
@@ -14,6 +14,10 @@ module Monster
     def apply_damage(damage)
       damage -= armor
       @health -= damage if damage > 0
+    end
+
+    def contact
+      :monster
     end
 
     def dead?
@@ -31,7 +35,7 @@ module Monster
     end
   end
 
-  class Kobold < Generic
+  class Kobold < Base
     def initialize
       super(10, 2)
     end
@@ -49,7 +53,7 @@ module Monster
     end
   end
 
-  class Goblin < Generic
+  class Goblin < Base
     def initialize
       super(15, 3)
     end
@@ -67,7 +71,7 @@ module Monster
     end
   end
 
-  class Orc < Generic
+  class Orc < Base
     def initialize
       super(25, 5)
     end
@@ -85,7 +89,7 @@ module Monster
     end
   end
 
-  class Troll < Generic
+  class Troll < Base
     def initialize
       super(35, 7)
     end
@@ -100,19 +104,6 @@ module Monster
 
     def generate_damage
       calc_damage(5, 20)
-    end
-  end
-
-  def make_monster(char)
-    case char
-    when 'k'
-      Kobold.new
-    when 'g'
-      Goblin.new
-    when 'o'
-      Orc.new
-    when 't'
-      Troll.new
     end
   end
 end
