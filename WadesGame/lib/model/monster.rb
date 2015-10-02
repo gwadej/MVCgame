@@ -1,4 +1,5 @@
 module Monster
+  # Base class for all monsters
   class Base
     attr_reader :health, :armor
     def initialize(health, armor)
@@ -40,6 +41,7 @@ module Monster
     end
   end
 
+  # Kobold is the lowest level monster
   class Kobold < Base
     def initialize
       super(10, 2)
@@ -50,7 +52,7 @@ module Monster
     end
 
     def hit_chance(penalty)
-      max(25-penalty, 0)
+      max(25 - penalty, 0)
     end
 
     def generate_damage
@@ -58,6 +60,7 @@ module Monster
     end
   end
 
+  # Gobin is the mid level monster
   class Goblin < Base
     def initialize
       super(15, 3)
@@ -68,7 +71,7 @@ module Monster
     end
 
     def hit_chance(penalty)
-      max(30-penalty, 5)
+      max(30 - penalty, 5)
     end
 
     def generate_damage
@@ -76,6 +79,7 @@ module Monster
     end
   end
 
+  # Orc is a serious monster
   class Orc < Base
     def initialize
       super(25, 5)
@@ -86,7 +90,7 @@ module Monster
     end
 
     def hit_chance(penalty)
-      max(50-penalty, 10)
+      max(50 - penalty, 10)
     end
 
     def generate_damage
@@ -94,6 +98,7 @@ module Monster
     end
   end
 
+  # Troll is the big, bad monster
   class Troll < Base
     def initialize
       super(35, 7)
@@ -104,7 +109,7 @@ module Monster
     end
 
     def hit_chance(penalty)
-      max(80-penalty, 20)
+      max(80 - penalty, 20)
     end
 
     def generate_damage

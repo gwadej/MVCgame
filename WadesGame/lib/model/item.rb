@@ -1,4 +1,5 @@
 module Item
+  # Interface for all items
   class Base
     def contact
       :item
@@ -9,6 +10,7 @@ module Item
     end
   end
 
+  # Gold the player can add to their wallet
   class Gold < Base
     attr_reader :value
     def initialize
@@ -26,6 +28,7 @@ module Item
     end
   end
 
+  # The goal item, a brilliant diamond
   class Diamond < Base
     def pick_up(player)
       puts "Congratulations, #{player.name}! You win."
