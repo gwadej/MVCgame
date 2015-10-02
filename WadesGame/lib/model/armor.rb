@@ -18,7 +18,7 @@ module Armor
       super(2)
     end
     def name
-      'leather'
+      'leather armor'
     end
   end
 
@@ -27,7 +27,7 @@ module Armor
       super(4)
     end
     def name
-      'ring'
+      'ring armor'
     end
   end
 
@@ -36,7 +36,7 @@ module Armor
       super(6)
     end
     def name
-      'chain'
+      'chain armor'
     end
   end
 
@@ -45,7 +45,7 @@ module Armor
       super(10)
     end
     def name
-      'plate'
+      'plate armor'
     end
   end
 end
