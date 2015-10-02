@@ -1,34 +1,83 @@
 require 'view'
 require 'model'
+require 'model/player'
 
+# Controller class for the game
 class GameController
-  @player = Player.new
+  attr_reader :player, :field, :help
+  def initialize
+    @player = Player.new('you')
+    @field = GameField.new
+    @help = <<EOH
+  Hit a character for an action
+
+  ? - This help screen
+  x - Exit the program
+  h - Move/attack left
+  j - Move/attack down
+  k - Move/attack up
+  l - Move/attack right
+  i - Display inventory
+  q - Select a potion and drink it
+EOH
+  end
 
   def run!
     loop do
-      Display::display_board
+      Display.display_board(field)
 
-      case Display::prompt '>'
-      when '?' 
-        Display::help
+      case Display.promptc '>'
+      when '?'
+        Display.display(help)
       when 'x'
-        if Display::prompt('Do you really want to quit? ').downcase == 'y'
-          exit
-        end
+        return if Display.prompt_yn 'Do you really want to quit? '
       when 'h'
-        @player.move_left
+        puts 'left'
+        move_left
       when 'j'
-        @player.move_down
+        puts 'down'
+        move_down
       when 'k'
-        @player.move_up
+        puts 'up'
+        move_up
       when 'l'
-        @player.move_right
+        puts 'right'
+        move_right
       when 'i'
-        Display::display_list(@player.inventory)
+        Display.display_list(@player.inventory)
       when 'q'
-        potion = Display::select(@player.inventory.select { |i| i.is_a? Potion })
-        potion.quaff(@player)
+        potion = Display.select(@player.inventory.select { |i| i.is_a? Potion })
+        potion.quaff(@player) unless potion.nil?
       end
     end
+  end
+
+  def move_left
+    move([-1, 0])
+  end
+
+  def move_right
+    move([1, 0])
+  end
+
+  def move_up
+    move([0, -1])
+  end
+
+  def move_down
+    move([0, 1])
+  end
+
+  def move(offset)
+    what = field.move(offset)
+    puts 'Bonk!' unless what.nil?
+#    if !what.nil?
+#      case what.contact
+#      when :item
+#        what.pick_up(player)
+#      when :monster
+#        what.attack(player)
+#      end
+#    end
   end
 end

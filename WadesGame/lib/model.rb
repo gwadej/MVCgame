@@ -4,6 +4,12 @@ require 'model/weapon'
 require 'model/armor'
 require 'model/potion'
 
+class Wall
+  def contact(_player)
+    :wall
+  end
+end
+
 OBJECTS = {
   ':' => Wall,
   '-' => Wall,
@@ -29,7 +35,18 @@ OBJECTS = {
 }
 
 class GameField
-  attr_reader :start
+  attr_reader :board, :position, :bbox
+
+  def initialize
+    load_board
+    @board = @initial_board.split(/\n/).each do |ln|
+      ln.each_char { |ch| what_is_it(ch) }
+    end
+    @position = [3, 0]
+    @bbox = [@board[0].size, @board.size]
+  end
+
+  def load_board
   @initial_board = <<EOM
 :-: :-:-:-:-:-:-:-:-:-:-:-:-:-:
 |      k|  [    |   |k   . g  |
@@ -61,27 +78,46 @@ class GameField
 |     |      ;  |     | |   | |
 :-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:
 EOM
-
-  def initialize
-    @board = @initial_board.split(/\n/).each do |ln|
-      ln.each_char { |ch| whats_here(ch) }
-    end
-    @start = [3, 0]
-  end
-
-  def whats_here(location)
-    clazz = OBJECTS[location]
-    return nil if clazz.nil?
-    clazz.new
   end
 
   def clear?(x, y)
-    whats_here(@board[x][y]).nil?
+    whats_there(x, y).nil?
   end
-end
 
-class Wall
-  def contact(_player)
-    :wall
+  def whats_there(x, y)
+    board[x][y]
+  end
+
+  def move(offset)
+    new_pos = position + offset
+    if clear?(new_pos[0], new_pos[1])
+      nil
+    else
+      @position = new_pos
+      board[new_pos[0]][new_pos[1]]
+    end
+  end
+
+  def clear_spot(offset)
+    new_pos = position + offset
+    board[new_pos[0]][new_pos[1]] = nil
+  end
+
+  def display_board
+    board = String.new(@initial_board)
+    board[position[0] + position[1] * bbox[0]] = '@'
+    board
+  end
+
+  private
+
+  def board
+    @board
+  end
+
+  def what_is_it(location)
+    clazz = OBJECTS[location]
+    return nil if clazz.nil?
+    clazz.new
   end
 end
