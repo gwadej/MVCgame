@@ -2,31 +2,37 @@ require 'rspec'
 require 'model/monster'
 
 shared_examples 'a monster' do
-  let(:monster) { described_class.new }
-
   it 'is created alive' do
-    expect(monster.dead?).to be false
+    expect(subject.dead?).to be false
   end
 
   describe '#health and #dead?' do
     it 'damage is reduced by its armor' do
-      monster.apply_damage(monster.health)
-      expect(monster.health).to be monster.armor
-      expect(monster.dead?).to be false
+      subject.apply_damage(subject.health)
+      expect(subject.health).to be subject.armor
+      expect(subject.dead?).to be false
     end
 
     it 'will die if all health wiped' do
-      monster.apply_damage(monster.health + monster.armor)
-      expect(monster.health).to be 0
-      expect(monster.dead?).to be true
+      subject.apply_damage(subject.health + subject.armor)
+      expect(subject.health).to be 0
+      expect(subject.dead?).to be true
     end
   end
 
   it 'is a monster on contact' do
-    expect(monster.contact).to be :monster
+    expect(subject.contact).to be :monster
   end
 
-  it { expect(monster).to respond_to(:attack).with(1).argument }
+  it { expect(subject).to respond_to(:attack).with(1).argument }
+
+  it 'base #hit_chance is reasonable' do
+    expect(subject.hit_chance(0)).to be_between(0, 100).inclusive
+  end
+
+  it 'minimum #hit_chance is reasonable' do
+    expect(subject.hit_chance(100)).to be_between(0, 50).inclusive
+  end
 end
 
 describe Monster::Kobold do
@@ -40,6 +46,7 @@ describe Monster::Kobold do
     expect(monster.health).to eq 10
   end
 
+  subject { monster }
   it_behaves_like 'a monster'
 end
 
@@ -54,6 +61,7 @@ describe Monster::Goblin do
     expect(monster.health).to eq 15
   end
 
+  subject { monster }
   it_behaves_like 'a monster'
 end
 
@@ -68,6 +76,7 @@ describe Monster::Orc do
     expect(monster.health).to eq 25
   end
 
+  subject { monster }
   it_behaves_like 'a monster'
 end
 
@@ -82,5 +91,6 @@ describe Monster::Troll do
     expect(monster.health).to eq 35
   end
 
+  subject { monster }
   it_behaves_like 'a monster'
 end

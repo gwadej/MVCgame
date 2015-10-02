@@ -34,6 +34,10 @@ module Monster
     def calc_damage(min, max)
       rand(min..max)
     end
+
+    def max(lhs, rhs)
+      lhs >= rhs ? lhs : rhs
+    end
   end
 
   class Kobold < Base
@@ -46,7 +50,7 @@ module Monster
     end
 
     def hit_chance(penalty)
-      Math.min(25-penalty, 0)
+      max(25-penalty, 0)
     end
 
     def generate_damage
@@ -64,7 +68,7 @@ module Monster
     end
 
     def hit_chance(penalty)
-      Math.min(30-penalty, 5)
+      max(30-penalty, 5)
     end
 
     def generate_damage
@@ -82,7 +86,7 @@ module Monster
     end
 
     def hit_chance(penalty)
-      Math.min(50-penalty, 10)
+      max(50-penalty, 10)
     end
 
     def generate_damage
@@ -100,7 +104,7 @@ module Monster
     end
 
     def hit_chance(penalty)
-      Math.min(80-penalty, 20)
+      max(80-penalty, 20)
     end
 
     def generate_damage
