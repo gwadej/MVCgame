@@ -6,8 +6,8 @@ module Monster
       @armor = armor
     end
 
-    def attack
-      return nil unless self.attack_hits?
+    def attack(penalty)
+      return nil unless self.attack_hits?(penalty)
       generate_damage
     end
 
@@ -26,8 +26,9 @@ module Monster
 
     protected
 
-    def does_attack_hit?(chance)
-      rand(0..100) < chance
+    def attack_hits?(penalty)
+      chance = hit_chance(penalty)
+      chance != 0 ? rand(0..100) < chance : false
     end
 
     def calc_damage(min, max)
@@ -44,8 +45,8 @@ module Monster
       'kobold'
     end
 
-    def attack_hits?
-      does_attack_hit?(25)
+    def hit_chance(penalty)
+      Math.min(25-penalty, 0)
     end
 
     def generate_damage
@@ -62,8 +63,8 @@ module Monster
       'goblin'
     end
 
-    def attack_hits?
-      does_attack_hit?(30)
+    def hit_chance(penalty)
+      Math.min(30-penalty, 5)
     end
 
     def generate_damage
@@ -80,8 +81,8 @@ module Monster
       'orc'
     end
 
-    def attack_hits?
-      does_attack_hit?(50)
+    def hit_chance(penalty)
+      Math.min(50-penalty, 10)
     end
 
     def generate_damage
@@ -98,8 +99,8 @@ module Monster
       'troll'
     end
 
-    def attack_hits?
-      does_attack_hit?(80)
+    def hit_chance(penalty)
+      Math.min(80-penalty, 20)
     end
 
     def generate_damage
