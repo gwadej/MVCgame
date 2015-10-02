@@ -26,7 +26,7 @@ shared_examples 'a monster' do
     expect(monster.contact).to be :monster
   end
 
-  it { expect(monster).to respond_to(:attack) }
+  it { expect(monster).to respond_to(:attack).with(1).argument }
 end
 
 describe Monster::Kobold do

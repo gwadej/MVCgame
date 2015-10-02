@@ -24,7 +24,7 @@ shared_examples 'a wieldable item' do
 
   it 'puts itself in the inventory' do
     subject.pick_up(player)
-    expect(player.inventory.last).to be subject
+    expect(player.inventory).to include subject
   end
 
   it 'becomes wielded' do
