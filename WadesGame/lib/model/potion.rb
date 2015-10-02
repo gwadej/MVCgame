@@ -5,6 +5,10 @@ module Potion
     def quaff(_player)
       puts 'That was refreshing'
     end
+
+    def name
+      'potion of water'
+    end
   end
 
   class MinorHealing < Item::Base
@@ -17,17 +21,29 @@ module Potion
       end
       player.heal(damage)
     end
+
+    def name
+      'potion of minor healing'
+    end
   end
 
   class MajorHealing < Item::Base
     def quaff(player)
       player.heal(40)
     end
+
+    def name
+      'potion of major healing'
+    end
   end
 
   class Sleep < Item::Base
     def quaff(_player)
       puts 'Player falls asleep'
+    end
+
+    def name
+      'potion of sleep'
     end
   end
 end
