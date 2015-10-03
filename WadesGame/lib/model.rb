@@ -89,7 +89,7 @@ EOM
   end
 
   def move(offset)
-    new_pos = position + offset
+    new_pos = [position[0] + offset[0], position[1] + offset[1]]
     if clear?(new_pos[0], new_pos[1])
       nil
     else
