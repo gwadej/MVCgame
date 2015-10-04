@@ -6,7 +6,7 @@ shared_examples 'an item' do |name|
   end
 
   it 'has correct name' do
-    expect(subject.name).to eq name
+    expect(subject.name).to match(name)
   end
 
   it '#pick_up' do

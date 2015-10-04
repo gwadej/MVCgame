@@ -8,6 +8,10 @@ class Wall
   def contact(_player)
     :wall
   end
+
+  def affect(_playeri, game)
+    game.message('Bonk!')
+  end
 end
 
 OBJECTS = {
@@ -43,7 +47,7 @@ class GameField
       ln.each_char { |ch| what_is_it(ch) }
     end
     @position = [3, 0]
-    @bbox = [@board[0].size, @board.size]
+    @bbox = [@board[0].size+1, @board.size] # add one for newline
   end
 
   def load_board
@@ -91,9 +95,9 @@ EOM
   def move(offset)
     new_pos = [position[0] + offset[0], position[1] + offset[1]]
     if clear?(new_pos[0], new_pos[1])
+      @position = new_pos
       nil
     else
-      @position = new_pos
       board[new_pos[0]][new_pos[1]]
     end
   end

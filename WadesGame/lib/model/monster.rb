@@ -10,6 +10,7 @@ module Monster
     def attack(penalty)
       return nil unless self.attack_hits?(penalty)
       generate_damage
+
     end
 
     def apply_damage(damage)
@@ -23,6 +24,16 @@ module Monster
 
     def dead?
       @health <= 0
+    end
+
+    def affect(player, game)
+      damage = attack(player.skill)
+      if damage.nil?
+        game.message("#{name} attacks player, and misses")
+      else
+        game.message("#{name} attacks player, doing #{damage}")
+        player.apply_damage(damage)
+      end
     end
 
     protected

@@ -8,6 +8,11 @@ module Item
     def pick_up(player)
       player.add_inventory(self)
     end
+
+    def affect(player, game)
+      pick_up(player)
+      game.message("player picked up #{name}")
+    end
   end
 
   # Gold the player can add to their wallet
@@ -24,7 +29,7 @@ module Item
     end
 
     def name
-      'gold'
+      "#{value} gold"
     end
   end
 
@@ -36,7 +41,7 @@ module Item
     end
 
     def name
-      'Diamond'
+      'a brilliant Diamond'
     end
   end
 end

@@ -1,7 +1,7 @@
 # Describe the player
 class Player
   attr_reader :name, :inventory, :gold, :weapon, :armor,
-    :health, :toughness
+    :health, :toughness, :skill
   # TODO: probably should not just return the inventory collection
 
   def initialize(name)
@@ -11,6 +11,7 @@ class Player
     @gold = 0
     @weapon = nil
     @toughness = 0
+    @skill = 0
   end
 
   def dead?

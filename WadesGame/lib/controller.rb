@@ -32,16 +32,12 @@ EOH
       when 'x'
         return if Display.prompt_yn 'Do you really want to quit? '
       when 'h'
-        puts 'left'
         move_left
       when 'j'
-        puts 'down'
         move_down
       when 'k'
-        puts 'up'
         move_up
       when 'l'
-        puts 'right'
         move_right
       when 'i'
         Display.display_list(@player.inventory)
@@ -70,14 +66,13 @@ EOH
 
   def move(offset)
     what = field.move(offset)
-    puts 'Bonk!' unless what.nil?
-#    if !what.nil?
-#      case what.contact
-#      when :item
-#        what.pick_up(player)
-#      when :monster
-#        what.attack(player)
-#      end
-#    end
+    unless what.nil?
+      puts what
+      what.affect(player, self)
+    end
+  end
+
+  def message(msg)
+    Display.display(msg)
   end
 end
